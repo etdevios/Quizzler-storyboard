@@ -10,8 +10,10 @@ import UIKit
 final class ViewController: UIViewController {
     @IBOutlet private weak var questionLabel: UILabel!
     @IBOutlet private weak var progressBar: UIProgressView!
-    @IBOutlet private weak var trueButton: UIButton!
-    @IBOutlet private weak var falseButton: UIButton!
+    //TODO: сделать кнопки через массив
+    @IBOutlet private weak var choice1: UIButton!
+    @IBOutlet private weak var choice2: UIButton!
+    @IBOutlet private weak var choice3: UIButton!
     @IBOutlet private weak var scoreLabel: UILabel!
     
     private var quizBrain = QuizBrain()
@@ -43,11 +45,20 @@ final class ViewController: UIViewController {
     @objc
     func updateUI() {
         questionLabel.text = quizBrain.getQuestionText()
-        setABoundaryAndCornerRadius(for: trueButton)
-        setABoundaryAndCornerRadius(for: falseButton)
         
-        trueButton.backgroundColor = .clear
-        falseButton.backgroundColor = .clear
+        setABoundaryAndCornerRadius(for: choice1)
+        setABoundaryAndCornerRadius(for: choice2)
+        setABoundaryAndCornerRadius(for: choice3)
+        
+        choice1.backgroundColor = .clear
+        choice2.backgroundColor = .clear
+        choice3.backgroundColor = .clear
+        
+        let answerChoices = quizBrain.getAnswers().shuffled()
+        
+        choice1.setTitle(answerChoices[0], for: .normal)
+        choice2.setTitle(answerChoices[1], for: .normal)
+        choice3.setTitle(answerChoices[2], for: .normal)
         
         scoreLabel.text = "Score: \(quizBrain.getScore())"
         progressBar.progress = quizBrain.getProgress()
